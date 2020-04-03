@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ad587805-9a33-46a1-9cf0-b26fd5bf12b8" name="Default Changelist" comment="" />
+    <list default="true" id="ad587805-9a33-46a1-9cf0-b26fd5bf12b8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/trash_dp32vb4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Horse/Horse.php" beforeDir="false" afterPath="$PROJECT_DIR$/Horse/Horse.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +18,23 @@
       <executable />
     </execution>
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.2" />
   <component name="ProjectId" id="1ZnowTpLvljEKqwbTtMPk7eH6ea" />
   <component name="ProjectViewState">
@@ -21,6 +44,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
@@ -37,6 +61,7 @@
       <workItem from="1585484465838" duration="1879000" />
       <workItem from="1585908554345" duration="4278000" />
       <workItem from="1585914544363" duration="3726000" />
+      <workItem from="1585924079896" duration="12520000" />
     </task>
     <servers />
   </component>
@@ -48,6 +73,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1098" y="114" key="#PHP/0.0.1920.1040@0.0.1920.1040" timestamp="1585909654988" />
+    <state x="438" y="235" key="#SQL_Dialects" timestamp="1585926127402">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="438" y="235" key="#SQL_Dialects/0.0.1920.1040@0.0.1920.1040" timestamp="1585926127402" />
+    <state x="552" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585928827405">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585928827405" />
+    <state x="1220" y="274" key="FileChooserDialogImpl" timestamp="1585924119793">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1220" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1585924119793" />
     <state x="1234" y="334" key="NewPhpClassDialog" timestamp="1585484853677">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -60,5 +97,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1136" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585914550326" />
+    <state x="143" y="230" width="672" height="678" key="search.everywhere.popup" timestamp="1585935194743">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="143" y="230" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585935194743" />
   </component>
 </project>
