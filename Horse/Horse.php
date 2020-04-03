@@ -50,7 +50,7 @@ if (isset($_GET['gethorse'])) {
 
             while ($row = mysqli_fetch_assoc($result)) {
                 $data[] = $row;
-                for($i = 0, $iMax = count($data); $i < $iMax; $i++){
+                for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
                     $data[$i]['FullName'] = $data[$i]['NickName'] . ' ' . $data[$i]['Brand'] . '-' . date_format(date_create($data[$i]['BirthDate']), 'y');
                 }
             }
@@ -64,7 +64,7 @@ if (isset($_GET['gethorse'])) {
 
             while ($row = mysqli_fetch_assoc($result)) {
                 $data[] = $row;
-                for($i = 0, $iMax = count($data); $i < $iMax; $i++){
+                for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
                     $data[$i]['FullName'] = $data[$i]['NickName'] . ' ' . $data[$i]['Brand'] . '-' . date_format(date_create($data[$i]['BirthDate']), 'y');
                 }
             }
