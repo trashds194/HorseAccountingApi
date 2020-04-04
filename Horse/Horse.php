@@ -7,9 +7,9 @@ require_once '../DbConnection.php';
 $conn = new mysqli($servername, $username, $password, $database, 3306) or die('Ошибка ' . mysqli_error($conn));
 $conn->set_charset('utf8');
 
-if (isset($_GET['gethorse'])) {
-    $gethorse = $_GET['gethorse'];
-    switch ($_GET['gethorse']) {
+if (isset($_GET['horse'])) {
+    $gethorse = $_GET['horse'];
+    switch ($_GET['horse']) {
         case 'all':
             $query = 'SELECT * FROM `лошадь`';
 
@@ -70,6 +70,98 @@ if (isset($_GET['gethorse'])) {
             }
 
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
+            break;
+        case 'last-id':
+            $query = 'SELECT * FROM `лошадь` ORDER BY `ID` DESC LIMIT 1';
+
+            $result = mysqli_query($conn, $query);
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $data['ID'] = $row['ID'];
+                $data['GpkNum'] = $row['GpkNum'];
+                $data['NickName'] = $row['NickName'];
+                $data['Brand'] = $row['Brand'];
+                $data['Bloodiness'] = $row['Bloodiness'];
+                $data['Color'] = $row['Color'];
+                $data['Gender'] = $row['Gender'];
+                $data['BirthDate'] = $row['BirthDate'];
+                $birthDate = date_create($row['BirthDate']);
+                $data['BirthPlace'] = $row['BirthPlace'];
+                $data['Owner'] = $row['Owner'];
+                $data['MotherID'] = $row['MotherID'];
+                $data['FatherID'] = $row['FatherID'];
+                $data['State'] = $row['State'];
+                $data['FullName'] = $row['NickName'] . ' ' . $row['Brand'] . '-' . date_format($birthDate, 'y');
+            }
+
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);
+            break;
+        case 'add':
+            if (isset($_POST['GpkNum']) && isset($_POST['NickName']) && isset($_POST['Brand']) && isset($_POST['Bloodiness']) && isset($_POST['Color'])
+                && isset($_POST['Gender']) && isset($_POST['BirthDate']) && isset($_POST['BirthPlace']) && isset($_POST['Owner']) && isset($_POST['MotherID'])
+                && isset($_POST['FatherID']) && isset($_POST['State'])) {
+
+                $GpkNum = $_POST['GpkNum'];
+                $NickName = $_POST['NickName'];
+                $Brand = $_POST['Brand'];
+                $Bloodiness = $_POST['Bloodiness'];
+                $Color = $_POST['Color'];
+                $Gender = $_POST['Gender'];
+                $BirthDate = $_POST['BirthDate'];
+                $BirthPlace = $_POST['BirthPlace'];
+                $Owner = $_POST['Owner'];
+                $MotherID = $_POST['MotherID'];
+                $FatherID = $_POST['FatherID'];
+                $State = $_POST['State'];
+
+                $query = ("INSERT INTO лошадь (`GpkNum`, `NickName`, `Brand`, `Bloodiness`, `Color`, `Gender`, `BirthDate`, `BirthPlace`,
+                    `Owner`, `MotherID`, `FatherID`, `State`) VALUES ('$GpkNum', '$NickName', '$Brand', '$Bloodiness', '$Color', '$Gender',
+                                                                      '$BirthDate', '$BirthPlace', '$Owner', '$MotherID', '$FatherID', '$State')");
+                $result = mysqli_query($conn, $query) or die("Ошибка " . mysqli_error($conn));
+
+                echo 'Успешно!';
+            }
+
+            break;
+        case 'change':
+            if (isset($_POST['ID']) && isset($_POST['GpkNum']) && isset($_POST['NickName']) && isset($_POST['Brand']) && isset($_POST['Bloodiness']) && isset($_POST['Color'])
+                && isset($_POST['Gender']) && isset($_POST['BirthDate']) && isset($_POST['BirthPlace']) && isset($_POST['Owner']) && isset($_POST['MotherID'])
+                && isset($_POST['FatherID'])) {
+
+                $ID = $_POST['ID'];
+                $GpkNum = $_POST['GpkNum'];
+                $NickName = $_POST['NickName'];
+                $Brand = $_POST['Brand'];
+                $Bloodiness = $_POST['Bloodiness'];
+                $Color = $_POST['Color'];
+                $Gender = $_POST['Gender'];
+                $BirthDate = $_POST['BirthDate'];
+                $BirthPlace = $_POST['BirthPlace'];
+                $Owner = $_POST['Owner'];
+                $MotherID = $_POST['MotherID'];
+                $FatherID = $_POST['FatherID'];
+                $State = $_POST['State'];
+
+                $query = ("Update `лошадь` set `GpkNum` = '$GpkNum', `NickName` = '$NickName', `Brand` = '$Brand', `Bloodiness` = '$Bloodiness', `Color` = '$Color', `Gender` = '$Gender', `BirthDate` = '$BirthDate', 
+                    `BirthPlace` = '$BirthPlace', `Owner` = '$Owner', `MotherID` = '$MotherID', `FatherID` = '$FatherID' WHERE `ID` = '$ID'");
+                $result = mysqli_query($conn, $query) or die("Ошибка " . mysqli_error($conn));
+
+                echo 'Успешно!';
+            }
+
+            break;
+        case 'change-state':
+            if (isset($_POST['ID']) && isset($_POST['State'])) {
+
+                $ID = $_POST['ID'];
+                $State = $_POST['State'];
+
+                $query = ("Update `лошадь` set `State` = '$State' WHERE `ID` = '$ID'");
+                $result = mysqli_query($conn, $query) or die("Ошибка " . mysqli_error($conn));
+
+                echo 'Успешно!';
+            }
+
             break;
         default:
             $query = 'SELECT * FROM `лошадь` Where `ID` =' . $gethorse;
