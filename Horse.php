@@ -1,6 +1,6 @@
 <?php
 
-require_once '../DbConnection.php';
+require_once 'DbConnection.php';
 
 //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -8,7 +8,7 @@ $conn = new mysqli($servername, $username, $password, $database, 3306) or die('�
 $conn->set_charset('utf8');
 
 if (isset($_GET['horse'])) {
-    $gethorse = $_GET['horse'];
+    $horse = $_GET['horse'];
     switch ($_GET['horse']) {
         case 'all':
             $query = 'SELECT * FROM `лошадь`';
@@ -97,9 +97,8 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'add':
-            if (isset($_POST['GpkNum']) && isset($_POST['NickName']) && isset($_POST['Brand']) && isset($_POST['Bloodiness']) && isset($_POST['Color'])
-                && isset($_POST['Gender']) && isset($_POST['BirthDate']) && isset($_POST['BirthPlace']) && isset($_POST['Owner']) && isset($_POST['MotherID'])
-                && isset($_POST['FatherID']) && isset($_POST['State'])) {
+            if (isset($_POST['GpkNum'], $_POST['NickName'], $_POST['Brand'], $_POST['Bloodiness'], $_POST['Color'], $_POST['Gender'], $_POST['BirthDate'],
+                $_POST['BirthPlace'], $_POST['Owner'], $_POST['MotherID'], $_POST['FatherID'], $_POST['State'])) {
 
                 $GpkNum = $_POST['GpkNum'];
                 $NickName = $_POST['NickName'];
@@ -114,19 +113,18 @@ if (isset($_GET['horse'])) {
                 $FatherID = $_POST['FatherID'];
                 $State = $_POST['State'];
 
-                $query = ("INSERT INTO лошадь (`GpkNum`, `NickName`, `Brand`, `Bloodiness`, `Color`, `Gender`, `BirthDate`, `BirthPlace`,
+                $query = "INSERT INTO лошадь (`GpkNum`, `NickName`, `Brand`, `Bloodiness`, `Color`, `Gender`, `BirthDate`, `BirthPlace`,
                     `Owner`, `MotherID`, `FatherID`, `State`) VALUES ('$GpkNum', '$NickName', '$Brand', '$Bloodiness', '$Color', '$Gender',
-                                                                      '$BirthDate', '$BirthPlace', '$Owner', '$MotherID', '$FatherID', '$State')");
-                $result = mysqli_query($conn, $query) or die("Ошибка " . mysqli_error($conn));
+                                                                      '$BirthDate', '$BirthPlace', '$Owner', '$MotherID', '$FatherID', '$State')";
+                $result = mysqli_query($conn, $query) or die('Ошибка ' . mysqli_error($conn));
 
                 echo 'Успешно!';
             }
 
             break;
         case 'change':
-            if (isset($_POST['ID']) && isset($_POST['GpkNum']) && isset($_POST['NickName']) && isset($_POST['Brand']) && isset($_POST['Bloodiness']) && isset($_POST['Color'])
-                && isset($_POST['Gender']) && isset($_POST['BirthDate']) && isset($_POST['BirthPlace']) && isset($_POST['Owner']) && isset($_POST['MotherID'])
-                && isset($_POST['FatherID'])) {
+            if (isset($_POST['ID'], $_POST['GpkNum'], $_POST['NickName'], $_POST['Brand'], $_POST['Bloodiness'], $_POST['Color'], $_POST['Gender'], $_POST['BirthDate'],
+                $_POST['BirthPlace'], $_POST['Owner'], $_POST['MotherID'], $_POST['FatherID'])) {
 
                 $ID = $_POST['ID'];
                 $GpkNum = $_POST['GpkNum'];
@@ -164,7 +162,7 @@ if (isset($_GET['horse'])) {
 
             break;
         default:
-            $query = 'SELECT * FROM `лошадь` Where `ID` =' . $gethorse;
+            $query = 'SELECT * FROM `лошадь` Where `ID` =' . $horse;
 
             $result = mysqli_query($conn, $query);
 
