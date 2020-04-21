@@ -11,7 +11,7 @@ if (isset($_GET['horse'])) {
     $horse = $_GET['horse'];
     switch ($_GET['horse']) {
         case 'all':
-            $query = 'SELECT * FROM `лошадь`';
+            $query = 'SELECT * FROM `horse`';
 
             $result = mysqli_query($conn, $query);
 
@@ -22,7 +22,7 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'acting':
-            $query = 'SELECT * FROM `лошадь` where `State` = \'Действующая\' or `State` = \'Действующий\'';
+            $query = 'SELECT * FROM `horse` where `State` = \'Действующая\' or `State` = \'Действующий\'';
 
             $result = mysqli_query($conn, $query);
 
@@ -33,7 +33,7 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'retired':
-            $query = 'SELECT * FROM `лошадь` where `State` = \'Выбыла\' or `State` = \'Выбыл\'';
+            $query = 'SELECT * FROM `horse` where `State` = \'Выбыла\' or `State` = \'Выбыл\'';
 
             $result = mysqli_query($conn, $query);
 
@@ -44,7 +44,7 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'mother':
-            $query = 'SELECT * FROM `лошадь` where `Gender` = \'Кобыла\' Order by `NickName`';
+            $query = 'SELECT * FROM `horse` where `Gender` = \'Кобыла\' Order by `NickName`';
 
             $result = mysqli_query($conn, $query);
 
@@ -58,7 +58,7 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'father':
-            $query = 'SELECT * FROM `лошадь` where `Gender` = \'Жеребец\' Order by `NickName`';
+            $query = 'SELECT * FROM `horse` where `Gender` = \'Жеребец\' Order by `NickName`';
 
             $result = mysqli_query($conn, $query);
 
@@ -72,7 +72,7 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'last-id':
-            $query = 'SELECT * FROM `лошадь` ORDER BY `ID` DESC LIMIT 1';
+            $query = 'SELECT * FROM `horse` ORDER BY `ID` DESC LIMIT 1';
 
             $result = mysqli_query($conn, $query);
 
@@ -140,7 +140,7 @@ if (isset($_GET['horse'])) {
                 $FatherID = $_POST['FatherID'];
                 $State = $_POST['State'];
 
-                $query = ("Update `лошадь` set `GpkNum` = '$GpkNum', `NickName` = '$NickName', `Brand` = '$Brand', `Bloodiness` = '$Bloodiness', `Color` = '$Color', `Gender` = '$Gender', `BirthDate` = '$BirthDate', 
+                $query = ("Update `horse` set `GpkNum` = '$GpkNum', `NickName` = '$NickName', `Brand` = '$Brand', `Bloodiness` = '$Bloodiness', `Color` = '$Color', `Gender` = '$Gender', `BirthDate` = '$BirthDate', 
                     `BirthPlace` = '$BirthPlace', `Owner` = '$Owner', `MotherID` = '$MotherID', `FatherID` = '$FatherID' WHERE `ID` = '$ID'");
                 $result = mysqli_query($conn, $query) or die("Ошибка " . mysqli_error($conn));
 
@@ -154,7 +154,7 @@ if (isset($_GET['horse'])) {
                 $ID = $_POST['ID'];
                 $State = $_POST['State'];
 
-                $query = ("Update `лошадь` set `State` = '$State' WHERE `ID` = '$ID'");
+                $query = ("Update `horse` set `State` = '$State' WHERE `ID` = '$ID'");
                 $result = mysqli_query($conn, $query) or die("Ошибка " . mysqli_error($conn));
 
                 echo 'Успешно!';
@@ -162,7 +162,7 @@ if (isset($_GET['horse'])) {
 
             break;
         default:
-            $query = 'SELECT * FROM `лошадь` Where `ID` =' . $horse;
+            $query = 'SELECT * FROM `horse` Where `ID` =' . $horse;
 
             $result = mysqli_query($conn, $query);
 
@@ -193,9 +193,9 @@ if (isset($_GET['search'])) {
 
     $search = $_GET['search'];
     if (strlen($search) > 0) {
-        $query = "SELECT * FROM `лошадь` where `NickName` Like '%" . $search . "%'";
+        $query = "SELECT * FROM `horse` where `NickName` Like '%" . $search . "%'";
     } else {
-        $query = 'SELECT * FROM `лошадь`';
+        $query = 'SELECT * FROM `horse`';
     }
 
     $result = mysqli_query($conn, $query);
