@@ -27,7 +27,7 @@ if (isset($_GET['scoring'])) {
                 $Comment = $_POST['Comment'];
                 $HorseID = $_POST['HorseID'];
 
-                $query = "INSERT INTO `бонитировка`(`Date`, `Age`, `Boniter`, `Origin`, `Typicality`, `Measurements`, `Exterior`, `WorkingCapacity`, `OffspringQuality`, `TheClass`, `Comment`, `HorseID`)
+                $query = "INSERT INTO `scoring`(`Date`, `Age`, `Boniter`, `Origin`, `Typicality`, `Measurements`, `Exterior`, `WorkingCapacity`, `OffspringQuality`, `TheClass`, `Comment`, `HorseID`)
 VALUES ('$Date', '$Age', '$Boniter', '$Origin', '$Typicality', '$Measurements', '$Exterior', '$WorkingCapacity', '$OffspringQuality', '$TheClass', '$Comment', '$HorseID')";
                 $result = mysqli_query($conn, $query) or die('Ошибка ' . mysqli_error($conn));
 
@@ -36,7 +36,7 @@ VALUES ('$Date', '$Age', '$Boniter', '$Origin', '$Typicality', '$Measurements', 
 
             break;
         default:
-            $query = 'SELECT * FROM `бонитировка` Where `HorseID` = ' . $scoring;
+            $query = 'SELECT * FROM `scoring` Where `HorseID` = ' . $scoring;
 
             $result = mysqli_query($conn, $query);
 

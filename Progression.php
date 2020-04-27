@@ -18,7 +18,7 @@ if(isset($_GET['progression'])){
                 $Comment = $_POST['Comment'];
                 $HorseID = $_POST['HorseID'];
 
-                $query = "INSERT INTO `движение`(`Date`, `Destination`, `Comment`, `HorseID`) VALUES ('$Date', '$Destination', '$Comment', '$HorseID')";
+                $query = "INSERT INTO `progression`(`Date`, `Destination`, `Comment`, `HorseID`) VALUES ('$Date', '$Destination', '$Comment', '$HorseID')";
                 $result = mysqli_query($conn, $query) or die('Ошибка ' . mysqli_error($conn));
 
                 echo 'Успешно!';
@@ -26,7 +26,7 @@ if(isset($_GET['progression'])){
 
             break;
         default:
-            $query = 'SELECT * FROM `движение` Where `HorseID` =' . $progression;
+            $query = 'SELECT * FROM `progression` Where `HorseID` =' . $progression;
 
             $result = mysqli_query($conn, $query);
 

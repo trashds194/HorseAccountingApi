@@ -113,7 +113,7 @@ if (isset($_GET['horse'])) {
                 $FatherID = $_POST['FatherID'];
                 $State = $_POST['State'];
 
-                $query = "INSERT INTO лошадь (`GpkNum`, `NickName`, `Brand`, `Bloodiness`, `Color`, `Gender`, `BirthDate`, `BirthPlace`,
+                $query = "INSERT INTO `horse` (`GpkNum`, `NickName`, `Brand`, `Bloodiness`, `Color`, `Gender`, `BirthDate`, `BirthPlace`,
                     `Owner`, `MotherID`, `FatherID`, `State`) VALUES ('$GpkNum', '$NickName', '$Brand', '$Bloodiness', '$Color', '$Gender',
                                                                       '$BirthDate', '$BirthPlace', '$Owner', '$MotherID', '$FatherID', '$State')";
                 $result = mysqli_query($conn, $query) or die('Ошибка ' . mysqli_error($conn));
