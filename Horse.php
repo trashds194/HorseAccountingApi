@@ -16,6 +16,7 @@ if (isset($_GET['horse'])) {
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
+                $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data[] = $row;
             }
 
@@ -27,6 +28,7 @@ if (isset($_GET['horse'])) {
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
+                $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data[] = $row;
             }
 
@@ -38,6 +40,7 @@ if (isset($_GET['horse'])) {
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
+                $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data[] = $row;
             }
 
@@ -49,6 +52,7 @@ if (isset($_GET['horse'])) {
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
+                $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data[] = $row;
                 for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
                     $data[$i]['FullName'] = $data[$i]['NickName'] . ' ' . $data[$i]['Brand'] . '-' . date_format(date_create($data[$i]['BirthDate']), 'y');
@@ -63,6 +67,7 @@ if (isset($_GET['horse'])) {
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
+                $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data[] = $row;
                 for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
                     $data[$i]['FullName'] = $data[$i]['NickName'] . ' ' . $data[$i]['Brand'] . '-' . date_format(date_create($data[$i]['BirthDate']), 'y');
@@ -84,6 +89,7 @@ if (isset($_GET['horse'])) {
                 $data['Bloodiness'] = $row['Bloodiness'];
                 $data['Color'] = $row['Color'];
                 $data['Gender'] = $row['Gender'];
+                $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data['BirthDate'] = $row['BirthDate'];
                 $birthDate = date_create($row['BirthDate']);
                 $data['BirthPlace'] = $row['BirthPlace'];
@@ -174,6 +180,7 @@ if (isset($_GET['horse'])) {
                 $data['Bloodiness'] = $row['Bloodiness'];
                 $data['Color'] = $row['Color'];
                 $data['Gender'] = $row['Gender'];
+                $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data['BirthDate'] = $row['BirthDate'];
                 $birthDate = date_create($row['BirthDate']);
                 $data['BirthPlace'] = $row['BirthPlace'];
@@ -201,6 +208,7 @@ if (isset($_GET['search'])) {
     $result = mysqli_query($conn, $query);
 
     while ($row = mysqli_fetch_assoc($result)) {
+        $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
         $data[] = $row;
     }
 

@@ -41,6 +41,7 @@ VALUES ('$Date', '$Age', '$Boniter', '$Origin', '$Typicality', '$Measurements', 
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
+                $row['Date'] = (new DateTime($row['Date']))->format('d.m.Y');
                 $data[] = $row;
             }
 
