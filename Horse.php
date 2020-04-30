@@ -88,6 +88,8 @@ if (isset($_GET['horse'])) {
                 $data['Brand'] = $row['Brand'];
                 $data['Bloodiness'] = $row['Bloodiness'];
                 $data['Color'] = $row['Color'];
+                $data['Breed'] = $row['Breed'];
+                $data['ChipNumber'] = $row['ChipNumber'];
                 $data['Gender'] = $row['Gender'];
                 $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data['BirthDate'] = $row['BirthDate'];
@@ -103,14 +105,16 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'add':
-            if (isset($_POST['GpkNum'], $_POST['NickName'], $_POST['Brand'], $_POST['Bloodiness'], $_POST['Color'], $_POST['Gender'], $_POST['BirthDate'],
-                $_POST['BirthPlace'], $_POST['Owner'], $_POST['MotherID'], $_POST['FatherID'], $_POST['State'])) {
+            if (isset($_POST['GpkNum'], $_POST['NickName'], $_POST['Brand'], $_POST['Bloodiness'], $_POST['Color'], $_POST['Breed'], $_POST['ChipNumber'],
+                $_POST['Gender'], $_POST['BirthDate'], $_POST['BirthPlace'], $_POST['Owner'], $_POST['MotherID'], $_POST['FatherID'], $_POST['State'])) {
 
                 $GpkNum = $_POST['GpkNum'];
                 $NickName = $_POST['NickName'];
                 $Brand = $_POST['Brand'];
                 $Bloodiness = $_POST['Bloodiness'];
                 $Color = $_POST['Color'];
+                $Breed = $_POST['Breed'];
+                $ChipNumber = $_POST['ChipNumber'];
                 $Gender = $_POST['Gender'];
                 $BirthDate = $_POST['BirthDate'];
                 $BirthPlace = $_POST['BirthPlace'];
@@ -119,8 +123,8 @@ if (isset($_GET['horse'])) {
                 $FatherID = $_POST['FatherID'];
                 $State = $_POST['State'];
 
-                $query = "INSERT INTO `horse` (`GpkNum`, `NickName`, `Brand`, `Bloodiness`, `Color`, `Gender`, `BirthDate`, `BirthPlace`,
-                    `Owner`, `MotherID`, `FatherID`, `State`) VALUES ('$GpkNum', '$NickName', '$Brand', '$Bloodiness', '$Color', '$Gender',
+                $query = "INSERT INTO `horse` (`GpkNum`, `NickName`, `Brand`, `Bloodiness`, `Color`, `Breed`, `ChipNumber`, `Gender`, `BirthDate`, `BirthPlace`,
+                    `Owner`, `MotherID`, `FatherID`, `State`) VALUES ('$GpkNum', '$NickName', '$Brand', '$Bloodiness', '$Color', '$Breed', '$ChipNumber', '$Gender',
                                                                       '$BirthDate', '$BirthPlace', '$Owner', '$MotherID', '$FatherID', '$State')";
                 $result = mysqli_query($conn, $query) or die('Ошибка ' . mysqli_error($conn));
 
@@ -129,8 +133,8 @@ if (isset($_GET['horse'])) {
 
             break;
         case 'change':
-            if (isset($_POST['ID'], $_POST['GpkNum'], $_POST['NickName'], $_POST['Brand'], $_POST['Bloodiness'], $_POST['Color'], $_POST['Gender'], $_POST['BirthDate'],
-                $_POST['BirthPlace'], $_POST['Owner'], $_POST['MotherID'], $_POST['FatherID'])) {
+            if (isset($_POST['ID'], $_POST['GpkNum'], $_POST['NickName'], $_POST['Brand'], $_POST['Bloodiness'], $_POST['Color'], $_POST['Breed'], $_POST['ChipNumber'],
+                $_POST['Gender'], $_POST['BirthDate'], $_POST['BirthPlace'], $_POST['Owner'], $_POST['MotherID'], $_POST['FatherID'])) {
 
                 $ID = $_POST['ID'];
                 $GpkNum = $_POST['GpkNum'];
@@ -138,6 +142,8 @@ if (isset($_GET['horse'])) {
                 $Brand = $_POST['Brand'];
                 $Bloodiness = $_POST['Bloodiness'];
                 $Color = $_POST['Color'];
+                $Breed = $_POST['Breed'];
+                $ChipNumber = $_POST['ChipNumber'];
                 $Gender = $_POST['Gender'];
                 $BirthDate = $_POST['BirthDate'];
                 $BirthPlace = $_POST['BirthPlace'];
@@ -146,8 +152,9 @@ if (isset($_GET['horse'])) {
                 $FatherID = $_POST['FatherID'];
                 $State = $_POST['State'];
 
-                $query = ("Update `horse` set `GpkNum` = '$GpkNum', `NickName` = '$NickName', `Brand` = '$Brand', `Bloodiness` = '$Bloodiness', `Color` = '$Color', `Gender` = '$Gender', `BirthDate` = '$BirthDate', 
-                    `BirthPlace` = '$BirthPlace', `Owner` = '$Owner', `MotherID` = '$MotherID', `FatherID` = '$FatherID' WHERE `ID` = '$ID'");
+                $query = ("Update `horse` set `GpkNum` = '$GpkNum', `NickName` = '$NickName', `Brand` = '$Brand', `Bloodiness` = '$Bloodiness', `Color` = '$Color',
+                   `Breed` = '$Breed', `ChipNumber` = '$ChipNumber', `Gender` = '$Gender', `BirthDate` = '$BirthDate', `BirthPlace` = '$BirthPlace', `Owner` = '$Owner',
+                   `MotherID` = '$MotherID', `FatherID` = '$FatherID' WHERE `ID` = '$ID'");
                 $result = mysqli_query($conn, $query) or die("Ошибка " . mysqli_error($conn));
 
                 echo 'Успешно!';
@@ -179,6 +186,8 @@ if (isset($_GET['horse'])) {
                 $data['Brand'] = $row['Brand'];
                 $data['Bloodiness'] = $row['Bloodiness'];
                 $data['Color'] = $row['Color'];
+                $data['Breed'] = $row['Breed'];
+                $data['ChipNumber'] = $row['ChipNumber'];
                 $data['Gender'] = $row['Gender'];
                 $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data['BirthDate'] = $row['BirthDate'];
