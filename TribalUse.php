@@ -11,11 +11,12 @@ if(isset($_GET['tribaluse'])) {
     $tribaluse = $_GET['tribaluse'];
     switch ($_GET['tribaluse']) {
         case 'add':
-            if (isset($_POST['Year'], $_POST['LastDate'], $_POST['FatherFullName'], $_POST['FatherBreed'], $_POST['FatherClass'], $_POST['FoalDate'], $_POST['FoalGender'],
-                $_POST['FoalColor'], $_POST['FoalNickName'], $_POST['FoalDestination'], $_POST['FatherID'], $_POST['FoalID'], $_POST['MotherID'])) {
+            if (isset($_POST['Year'], $_POST['LastDate'], $_POST['MatingType'], $_POST['FatherFullName'], $_POST['FatherBreed'], $_POST['FatherClass'], $_POST['FoalDate'], $_POST['FoalGender'],
+                $_POST['FoalColor'], $_POST['FoalNickName'], $_POST['FoalBrand'], $_POST['FoalDestination'], $_POST['FatherID'], $_POST['FoalID'], $_POST['MotherID'])) {
 
                 $Year = $_POST['Year'];
                 $LastDate = $_POST['LastDate'];
+                $MatingType = $_POST['MatingType'];
                 $FatherFullName = $_POST['FatherFullName'];
                 $FatherBreed = $_POST['FatherBreed'];
                 $FatherClass = $_POST['FatherClass'];
@@ -23,14 +24,16 @@ if(isset($_GET['tribaluse'])) {
                 $FoalGender = $_POST['FoalGender'];
                 $FoalColor = $_POST['FoalColor'];
                 $FoalNickName = $_POST['FoalNickName'];
+                $FoalBrand = $_POST['FoalBrand'];
                 $FoalDestination = $_POST['FoalDestination'];
                 $FatherID = $_POST['FatherID'];
                 $FoalID = $_POST['FoalID'];
                 $MotherID = $_POST['MotherID'];
 
-                $query = "INSERT INTO `tribaluse`(`Year`, `LastDate`, `FatherFullName`, `FatherBreed`, `FatherClass`, `FoalDate`, `FoalGender`, `FoalColor`, `FoalNickName`, `FoalDestination`,
-                        `FatherID`, `FoalID`, `MotherID`) VALUES ('$Year', '$LastDate', '$FatherFullName', '$FatherBreed', '$FatherClass', '$FoalDate', '$FoalGender', '$FoalColor', '$FoalNickName',
-                                                                  '$FoalDestination', '$FatherID', '$FoalID', '$MotherID')";
+                $query = "INSERT INTO `tribaluse`(`Year`, `LastDate`, `MatingType`, `FatherFullName`, `FatherBreed`, `FatherClass`, `FoalDate`, 
+                        `FoalGender`, `FoalColor`, `FoalNickName`, `FoalBrand`, `FoalDestination`, `FatherID`, `FoalID`, `MotherID`) VALUES ('$Year', '$LastDate',
+                        '$MatingType', '$FatherFullName', '$FatherBreed', '$FatherClass', '$FoalDate', '$FoalGender', '$FoalColor', '$FoalNickName',
+                                                                  '$FoalBrand', '$FoalDestination', '$FatherID', '$FoalID', '$MotherID')";
                 $result = mysqli_query($conn, $query) or die('Ошибка ' . mysqli_error($conn));
 
                 echo 'Успешно!';
