@@ -7,7 +7,7 @@ require_once 'DbConnection.php';
 $conn = new mysqli($servername, $username, $password, $database, 3306) or die('Ошибка ' . mysqli_error($conn));
 $conn->set_charset('utf8');
 
-if(isset($_GET['tribaluse'])) {
+if (isset($_GET['tribaluse'])) {
     $tribaluse = $_GET['tribaluse'];
     switch ($_GET['tribaluse']) {
         case 'add':
@@ -38,7 +38,26 @@ if(isset($_GET['tribaluse'])) {
 
                 echo 'Успешно!';
             }
+            break;
+        case 'change':
+            if (isset($_POST['FoalDate'], $_POST['FoalGender'], $_POST['FoalColor'], $_POST['FoalNickName'],
+                $_POST['FoalBrand'], $_POST['FatherID'], $_POST['FoalID'], $_POST['MotherID'])) {
 
+                $FoalDate = $_POST['FoalDate'];
+                $FoalGender = $_POST['FoalGender'];
+                $FoalColor = $_POST['FoalColor'];
+                $FoalNickName = $_POST['FoalNickName'];
+                $FoalBrand = $_POST['FoalBrand'];
+                $FatherID = $_POST['FatherID'];
+                $FoalID = $_POST['FoalID'];
+                $MotherID = $_POST['MotherID'];
+
+                $query = "Update `tribaluse` set `FoalDate` = '$FoalDate', `FoalGender` = '$FoalGender', `FoalColor` = '$FoalColor', `FoalNickName` = '$FoalNickName',  
+                       `FoalBrand` = '$FoalBrand' WHERE `FoalID` = '$FoalID' and `FatherID` = '$FatherID' and `MotherID` = '$MotherID'";
+                $result = mysqli_query($conn, $query) or die('Ошибка ' . mysqli_error($conn));
+
+                echo 'Успешно!';
+            }
             break;
         default:
             $query = 'SELECT * FROM `tribaluse` Where `MotherID` =' . $tribaluse;

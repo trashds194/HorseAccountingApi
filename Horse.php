@@ -252,6 +252,32 @@ if (isset($_GET['search'])) {
     while ($row = mysqli_fetch_assoc($result)) {
         $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
         $data[] = $row;
+        for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
+            $data[$i]['FullName'] = $data[$i]['NickName'] . ' ' . $data[$i]['Brand'] . '-' . date_format(date_create($data[$i]['BirthDate']), 'y');
+            $data[$i]['MotherFullName'] = getParentFullName($conn, $data[$i]['MotherID']);
+            $data[$i]['FatherFullName'] = getParentFullName($conn, $data[$i]['FatherID']);
+        }
+    }
+
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+}
+
+if (isset($_GET['father'])) {
+
+    $father = $_GET['father'];
+
+    $query = "SELECT * FROM `horse` where `FatherID` = '$father' order by `NickName` ASC";
+
+    $result = mysqli_query($conn, $query);
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
+        $data[] = $row;
+        for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
+            $data[$i]['FullName'] = $data[$i]['NickName'] . ' ' . $data[$i]['Brand'] . '-' . date_format(date_create($data[$i]['BirthDate']), 'y');
+            $data[$i]['MotherFullName'] = getParentFullName($conn, $data[$i]['MotherID']);
+            $data[$i]['FatherFullName'] = getParentFullName($conn, $data[$i]['FatherID']);
+        }
     }
 
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
