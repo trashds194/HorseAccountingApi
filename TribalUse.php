@@ -56,7 +56,11 @@ if (isset($_GET['tribaluse'])) {
                        `FoalBrand` = '$FoalBrand' WHERE `FoalID` = '$FoalID' and `FatherID` = '$FatherID' and `MotherID` = '$MotherID'";
                 $result = mysqli_query($conn, $query) or die('Ошибка ' . mysqli_error($conn));
 
-                echo 'Успешно!';
+                if ($result) {
+                    echo mysqli_affected_rows($conn);
+                } else {
+                    echo mysqli_affected_rows($conn);
+                }
             }
             break;
         default:
