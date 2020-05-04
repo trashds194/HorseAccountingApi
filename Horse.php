@@ -24,7 +24,7 @@ if (isset($_GET['horse'])) {
     $horse = $_GET['horse'];
     switch ($_GET['horse']) {
         case 'all':
-            $query = 'SELECT * FROM `horse`';
+            $query = 'SELECT * FROM `horse` order by if(`NickName` = \'\' or `NickName` is null,1,0),`NickName`';
 
             $result = mysqli_query($conn, $query);
 
@@ -40,7 +40,7 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'acting':
-            $query = 'SELECT * FROM `horse` where `State` = \'Действующая\' or `State` = \'Действующий\'';
+            $query = 'SELECT * FROM `horse` where `State` = \'Действующая\' or `State` = \'Действующий\' order by if(`NickName` = \'\' or `NickName` is null,1,0),`NickName`';
 
             $result = mysqli_query($conn, $query);
 
@@ -56,7 +56,7 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'retired':
-            $query = 'SELECT * FROM `horse` where `State` = \'Выбыла\' or `State` = \'Выбыл\'';
+            $query = 'SELECT * FROM `horse` where `State` = \'Выбыла\' or `State` = \'Выбыл\' order by if(`NickName` = \'\' or `NickName` is null,1,0),`NickName`';
 
             $result = mysqli_query($conn, $query);
 
@@ -72,7 +72,7 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'mother':
-            $query = 'SELECT * FROM `horse` where `Gender` = \'Кобыла\' Order by `NickName`';
+            $query = 'SELECT * FROM `horse` where `Gender` = \'Кобыла\' order by if(`NickName` = \'\' or `NickName` is null,1,0),`NickName`';
 
             $result = mysqli_query($conn, $query);
 
@@ -89,7 +89,7 @@ if (isset($_GET['horse'])) {
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'father':
-            $query = 'SELECT * FROM `horse` where `Gender` = \'Жеребец\' Order by `NickName`';
+            $query = 'SELECT * FROM `horse` where `Gender` = \'Жеребец\' order by if(`NickName` = \'\' or `NickName` is null,1,0),`NickName`';
 
             $result = mysqli_query($conn, $query);
 
@@ -193,6 +193,19 @@ if (isset($_GET['horse'])) {
             }
 
             break;
+        case 'change-class':
+            if (isset($_POST['Breed'], $_POST['TheClass'], $_POST['ID'])) {
+
+                $Breed = $_POST['Breed'];
+                $TheClass = $_POST['TheClass'];
+                $ID = $_POST['ID'];
+
+                $query = ("Update `horse` set `Breed` = '$Breed', `TheClass` = '$TheClass' WHERE `ID` = '$ID'");
+                $result = mysqli_query($conn, $query) or die("Ошибка " . mysqli_error($conn));
+
+                echo 'Успешно!';
+            }
+            break;
         case 'change-state':
             if (isset($_POST['ID']) && isset($_POST['State'])) {
 
@@ -242,7 +255,7 @@ if (isset($_GET['search'])) {
 
     $search = $_GET['search'];
     if (strlen($search) > 0) {
-        $query = "SELECT * FROM `horse` where `NickName` Like '%" . $search . "%' order by `NickName` ASC";
+        $query = "SELECT * FROM `horse` where `NickName` Like '%" . $search . "%' order by if(`NickName` = '' or `NickName` is null,1,0),`NickName`";
     } else {
         $query = 'SELECT * FROM `horse`';
     }
@@ -266,7 +279,7 @@ if (isset($_GET['father'])) {
 
     $father = $_GET['father'];
 
-    $query = "SELECT * FROM `horse` where `FatherID` = '$father' order by `NickName` ASC";
+    $query = "SELECT * FROM `horse` where `FatherID` = '$father' order by if(`NickName` = '' or `NickName` is null,1,0),`NickName`";
 
     $result = mysqli_query($conn, $query);
 

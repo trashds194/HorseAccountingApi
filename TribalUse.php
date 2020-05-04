@@ -69,7 +69,11 @@ if (isset($_GET['tribaluse'])) {
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
-                $row['LastDate'] = (new DateTime($row['LastDate']))->format('d.m.Y');
+                if ($row['LastDate'] == 0) {
+                    $row['LastDate'] = '00.00.0000';
+                } else {
+                    $row['LastDate'] = (new DateTime($row['LastDate']))->format('d.m.Y');
+                }
                 $data[] = $row;
             }
 
