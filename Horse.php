@@ -7,100 +7,82 @@ require_once 'DbConnection.php';
 $conn = new mysqli($servername, $username, $password, $database, 3306) or die('Ошибка ' . mysqli_error($conn));
 $conn->set_charset('utf8');
 
-function getParentFullName($conn, $parentID)
-{
-    $query = 'SELECT * FROM `horse` Where `ID` =' . $parentID;
-
-    $result = mysqli_query($conn, $query);
-
-    while ($row = mysqli_fetch_assoc($result)) {
-        $parentFullName = $row['NickName'] . ' ' . $row['Brand'] . '-' . date_format(date_create($row['BirthDate']), 'y');
-    }
-
-    return $parentFullName;
-}
-
 if (isset($_GET['horse'])) {
     $horse = $_GET['horse'];
     switch ($_GET['horse']) {
         case 'all':
-            $query = 'SELECT * FROM `horse` order by if(`NickName` = \'\' or `NickName` is null,1,0),`NickName`';
+            $query = 'SELECT child.*, 
+            (SELECT Concat(mother.NickName, \' \', mother.Brand, \'-\', DATE_FORMAT(mother.BirthDate, \'%y\')) from horse mother WHERE mother.ID = child.MotherID) as MotherFullName, 
+            (SELECT Concat(father.NickName, \' \', father.Brand, \'-\', DATE_FORMAT(father.BirthDate, \'%y\')) from horse father WHERE father.ID = child.FatherID) as FatherFullName 
+            FROM horse child order by if(child.NickName = \'\' or child.NickName is null,1,0), child.NickName';
 
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
                 $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data[] = $row;
-                for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
-                    $data[$i]['MotherFullName'] = getParentFullName($conn, $data[$i]['MotherID']);
-                    $data[$i]['FatherFullName'] = getParentFullName($conn, $data[$i]['FatherID']);
-                }
             }
 
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'acting':
-            $query = 'SELECT * FROM `horse` where `State` = \'Действующая\' or `State` = \'Действующий\' order by if(`NickName` = \'\' or `NickName` is null,1,0),`NickName`';
+            $query = 'SELECT child.*, 
+            (SELECT Concat(mother.NickName, \' \', mother.Brand, \'-\', DATE_FORMAT(mother.BirthDate, \'%y\')) from horse mother WHERE mother.ID = child.MotherID) as MotherFullName, 
+            (SELECT Concat(father.NickName, \' \', father.Brand, \'-\', DATE_FORMAT(father.BirthDate, \'%y\')) from horse father WHERE father.ID = child.FatherID) as FatherFullName 
+            FROM horse child where child.State = \'Действующая\' or child.State = \'Действующий\' order by if(child.NickName = \'\' or child.NickName is null,1,0), child.NickName';
 
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
                 $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data[] = $row;
-                for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
-                    $data[$i]['MotherFullName'] = getParentFullName($conn, $data[$i]['MotherID']);
-                    $data[$i]['FatherFullName'] = getParentFullName($conn, $data[$i]['FatherID']);
-                }
             }
 
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'retired':
-            $query = 'SELECT * FROM `horse` where `State` = \'Выбыла\' or `State` = \'Выбыл\' order by if(`NickName` = \'\' or `NickName` is null,1,0),`NickName`';
+            $query = 'SELECT child.*, 
+            (SELECT Concat(mother.NickName, \' \', mother.Brand, \'-\', DATE_FORMAT(mother.BirthDate, \'%y\')) from horse mother WHERE mother.ID = child.MotherID) as MotherFullName, 
+            (SELECT Concat(father.NickName, \' \', father.Brand, \'-\', DATE_FORMAT(father.BirthDate, \'%y\')) from horse father WHERE father.ID = child.FatherID) as FatherFullName 
+            FROM horse child where child.State = \'Выбыла\' or child.State = \'Выбыл\' order by if(child.NickName = \'\' or child.NickName is null,1,0), child.NickName';
 
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
                 $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data[] = $row;
-                for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
-                    $data[$i]['MotherFullName'] = getParentFullName($conn, $data[$i]['MotherID']);
-                    $data[$i]['FatherFullName'] = getParentFullName($conn, $data[$i]['FatherID']);
-                }
             }
 
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'mother':
-            $query = 'SELECT * FROM `horse` where `Gender` = \'Кобыла\' order by if(`NickName` = \'\' or `NickName` is null,1,0),`NickName`';
+            $query = 'SELECT child.*,
+			Concat(child.NickName, \' \', child.Brand, \'-\', DATE_FORMAT(child.BirthDate, \'%y\')) as FullName,
+            (SELECT Concat(mother.NickName, \' \', mother.Brand, \'-\', DATE_FORMAT(mother.BirthDate, \'%y\')) from horse mother WHERE mother.ID = child.MotherID) as MotherFullName, 
+            (SELECT Concat(father.NickName, \' \', father.Brand, \'-\', DATE_FORMAT(father.BirthDate, \'%y\')) from horse father WHERE father.ID = child.FatherID) as FatherFullName 
+            FROM horse child where child.Gender = \'Кобыла\' order by if(child.NickName = \'\' or child.NickName is null,1,0), child.NickName';
 
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
                 $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data[] = $row;
-                for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
-                    $data[$i]['FullName'] = $data[$i]['NickName'] . ' ' . $data[$i]['Brand'] . '-' . date_format(date_create($data[$i]['BirthDate']), 'y');
-                    $data[$i]['MotherFullName'] = getParentFullName($conn, $data[$i]['MotherID']);
-                    $data[$i]['FatherFullName'] = getParentFullName($conn, $data[$i]['FatherID']);
-                }
             }
 
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
             break;
         case 'father':
-            $query = 'SELECT * FROM `horse` where `Gender` = \'Жеребец\' order by if(`NickName` = \'\' or `NickName` is null,1,0),`NickName`';
+            $query = 'SELECT child.*,
+			Concat(child.NickName, \' \', child.Brand, \'-\', DATE_FORMAT(child.BirthDate, \'%y\')) as FullName,
+            (SELECT Concat(mother.NickName, \' \', mother.Brand, \'-\', DATE_FORMAT(mother.BirthDate, \'%y\')) from horse mother WHERE mother.ID = child.MotherID) as MotherFullName, 
+            (SELECT Concat(father.NickName, \' \', father.Brand, \'-\', DATE_FORMAT(father.BirthDate, \'%y\')) from horse father WHERE father.ID = child.FatherID) as FatherFullName 
+            FROM horse child where child.Gender = \'Жеребец\' order by if(child.NickName = \'\' or child.NickName is null,1,0), child.NickName';
 
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
                 $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
                 $data[] = $row;
-                for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
-                    $data[$i]['FullName'] = $data[$i]['NickName'] . ' ' . $data[$i]['Brand'] . '-' . date_format(date_create($data[$i]['BirthDate']), 'y');
-                    $data[$i]['MotherFullName'] = getParentFullName($conn, $data[$i]['MotherID']);
-                    $data[$i]['FatherFullName'] = getParentFullName($conn, $data[$i]['FatherID']);
-                }
             }
 
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
@@ -255,7 +237,11 @@ if (isset($_GET['search'])) {
 
     $search = $_GET['search'];
     if (strlen($search) > 0) {
-        $query = "SELECT * FROM `horse` where `NickName` Like '%" . $search . "%' order by if(`NickName` = '' or `NickName` is null,1,0),`NickName`";
+        $query = "SELECT child.*,
+			Concat(child.NickName, ' ', child.Brand, '-', DATE_FORMAT(child.BirthDate, '%y')) as FullName,
+            (SELECT Concat(mother.NickName, ' ', mother.Brand, '-', DATE_FORMAT(mother.BirthDate, '%y')) from horse mother WHERE mother.ID = child.MotherID) as MotherFullName, 
+            (SELECT Concat(father.NickName, ' ', father.Brand, '-', DATE_FORMAT(father.BirthDate, '%y')) from horse father WHERE father.ID = child.FatherID) as FatherFullName 
+            FROM horse child where child.NickName Like '%" . $search . "%' order by if(child.NickName = '' or child.NickName is null,1,0), child.NickName";
     } else {
         $query = 'SELECT * FROM `horse`';
     }
@@ -265,11 +251,6 @@ if (isset($_GET['search'])) {
     while ($row = mysqli_fetch_assoc($result)) {
         $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
         $data[] = $row;
-        for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
-            $data[$i]['FullName'] = $data[$i]['NickName'] . ' ' . $data[$i]['Brand'] . '-' . date_format(date_create($data[$i]['BirthDate']), 'y');
-            $data[$i]['MotherFullName'] = getParentFullName($conn, $data[$i]['MotherID']);
-            $data[$i]['FatherFullName'] = getParentFullName($conn, $data[$i]['FatherID']);
-        }
     }
 
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
@@ -279,18 +260,17 @@ if (isset($_GET['father'])) {
 
     $father = $_GET['father'];
 
-    $query = "SELECT * FROM `horse` where `FatherID` = '$father' order by if(`NickName` = '' or `NickName` is null,1,0),`NickName`";
+    $query = "SELECT child.*,
+			Concat(child.NickName, ' ', child.Brand, '-', DATE_FORMAT(child.BirthDate, '%y')) as FullName,
+            (SELECT Concat(mother.NickName, ' ', mother.Brand, '-', DATE_FORMAT(mother.BirthDate, '%y')) from horse mother WHERE mother.ID = child.MotherID) as MotherFullName, 
+            (SELECT Concat(father.NickName, ' ', father.Brand, '-', DATE_FORMAT(father.BirthDate, '%y')) from horse father WHERE father.ID = child.FatherID) as FatherFullName 
+            FROM horse child where child.FatherID = '$father' order by if(child.NickName = '' or child.NickName is null,1,0), child.NickName";
 
     $result = mysqli_query($conn, $query);
 
     while ($row = mysqli_fetch_assoc($result)) {
         $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
         $data[] = $row;
-        for ($i = 0, $iMax = count($data); $i < $iMax; $i++) {
-            $data[$i]['FullName'] = $data[$i]['NickName'] . ' ' . $data[$i]['Brand'] . '-' . date_format(date_create($data[$i]['BirthDate']), 'y');
-            $data[$i]['MotherFullName'] = getParentFullName($conn, $data[$i]['MotherID']);
-            $data[$i]['FatherFullName'] = getParentFullName($conn, $data[$i]['FatherID']);
-        }
     }
 
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
