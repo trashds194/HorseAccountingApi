@@ -64,7 +64,7 @@ if (isset($_GET['tribaluse'])) {
             }
             break;
         default:
-            $query = 'SELECT * FROM `tribaluse` Where `MotherID` =' . $tribaluse;
+            $query = 'SELECT * FROM `tribaluse` Where `MotherID` =' . $tribaluse . ' ORDER by `Year` DESC';
 
             $result = mysqli_query($conn, $query);
 
