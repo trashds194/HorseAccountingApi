@@ -201,6 +201,19 @@ if (isset($_GET['horse'])) {
             }
 
             break;
+        case 'del':
+
+            if (isset($_POST['ID'])) {
+
+                $ID = $_POST['ID'];
+
+                $query = ("Delete from `horse` WHERE `ID` = '$ID'");
+                $result = mysqli_query($conn, $query) or die("Ошибка " . mysqli_error($conn));
+
+                echo $result;
+            }
+
+            break;
         default:
             $query = 'SELECT * FROM `horse` Where `ID` =' . $horse;
 
@@ -242,6 +255,29 @@ if (isset($_GET['search'])) {
             (SELECT Concat(mother.NickName, ' ', mother.Brand, '-', DATE_FORMAT(mother.BirthDate, '%y')) from horse mother WHERE mother.ID = child.MotherID) as MotherFullName, 
             (SELECT Concat(father.NickName, ' ', father.Brand, '-', DATE_FORMAT(father.BirthDate, '%y')) from horse father WHERE father.ID = child.FatherID) as FatherFullName 
             FROM horse child where child.NickName Like '%" . $search . "%' order by if(child.NickName = '' or child.NickName is null,1,0), child.NickName";
+    } else {
+        $query = 'SELECT * FROM `horse`';
+    }
+
+    $result = mysqli_query($conn, $query);
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $row['BirthDate'] = (new DateTime($row['BirthDate']))->format('d.m.Y');
+        $data[] = $row;
+    }
+
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+}
+
+if (isset($_GET['year'])) {
+
+    $year = $_GET['year'];
+    if (strlen($year) > 0) {
+        $query = "SELECT child.*,
+			Concat(child.NickName, ' ', child.Brand, '-', DATE_FORMAT(child.BirthDate, '%y')) as FullName,
+            (SELECT Concat(mother.NickName, ' ', mother.Brand, '-', DATE_FORMAT(mother.BirthDate, '%y')) from horse mother WHERE mother.ID = child.MotherID) as MotherFullName, 
+            (SELECT Concat(father.NickName, ' ', father.Brand, '-', DATE_FORMAT(father.BirthDate, '%y')) from horse father WHERE father.ID = child.FatherID) as FatherFullName 
+            FROM horse child where Year(child.BirthDate) like '%" . $year . "%' order by if(child.NickName = '' or child.NickName is null,1,0), child.NickName";
     } else {
         $query = 'SELECT * FROM `horse`';
     }
